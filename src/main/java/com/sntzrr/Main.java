@@ -132,9 +132,86 @@ public class Main {
         return Arrays.asList(Arrays.stream(array).boxed().toArray(Integer[]::new));
     }
 
+    //Mock Test.
+    public static int flippingMatrix(List<List<Integer>> matrix) {
+        int n = matrix.size() / 2;
+        int sum = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                sum += Math.max(matrix.get(i).get(j),
+                        Math.max(matrix.get(2 * n - 1 - i).get(j),
+                                Math.max(matrix.get(i).get(2 * n - 1 - j),
+                                        matrix.get(2 * n - 1 - i).get(2 * n - 1 - j))));
+            }
+        }
+        return sum;
+    }
+
+    /*------------------------------- DAY 3 -------------------------------*/
+
+
+    /*------------------------------- Basics certification -------------------------------*/
+    public static boolean isBalanced(String s){
+        Stack<Character> stack = new Stack<>();
+        for (char bracket : s.toCharArray()) {
+            if (bracket == '(' || bracket == '[' || bracket == '{') {
+                stack.push(bracket);
+            } else if ((stack.isEmpty())) {
+                return false;
+            }else{
+                char top = stack.pop();
+                if ((bracket == ')' && top != '(') || (bracket == ']' && top != '[') || (bracket == '}' && top != '{')) {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    abstract class Shape {
+        int length;
+        int breadth;
+        abstract void area();
+    }
+
+    class Shapes extends Shape{
+        Shapes(int length, int breadth){
+            this.length = length;
+            this.breadth = breadth;
+        }
+        public void area(){
+            System.out.println(this.length+" "+this.breadth);
+        }
+    }
+
+    class Rectangule extends Shape{
+        Rectangule(int length, int breadth){
+            this.length = length;
+            this.breadth = breadth;
+        }
+        public void area(){
+            System.out.println(this.length*this.breadth);
+        }
+
+    }
+
+
+    public static String decryptMessage(String encryptedMessage) {
+        String[] array = encryptedMessage.split(" ");
+        StringBuilder reverse = new StringBuilder();
+
+        for (int i = 0; i < array.length; i++){
+            reverse.append(array[array.length -i -1]);
+            if (i != array.length - 1) {
+                reverse.append(" ");
+            }
+        }
+
+        return reverse.toString();
+    }
 
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(countingSort2(Arrays.asList(1, 1, 3, 2, 1)));
+
     }
 }
